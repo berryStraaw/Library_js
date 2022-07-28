@@ -16,6 +16,11 @@ Book.prototype.info=function(){
         return string;
 }
 
+Book.prototype.changeRead=function(){
+    if(this.hasRead) this.hasRead=false;
+    else this.hasRead=true;
+}
+
 
 function addBook(book){
     library.push(book);
@@ -36,9 +41,21 @@ function createBook(){
 function display(){
     const bookList=document.querySelector('.books');
     bookList.innerHTML="";
-    library.forEach(element => {
+    library.forEach((element, index) => {
         const div=document.createElement('div');
+
+        const delBtn=document.createElement('button');
+        delBtn.innerHTML="Delete Book"
+        delBtn.onclick=function(){library.splice(index,1);display();};
+
+        const changeBtn=document.createElement('button');
+        changeBtn.innerHTML="change read status";
+        changeBtn.onclick=function(){element.changeRead();display();}
+        
+
         div.innerHTML=element.info();
+        div.appendChild(delBtn);
+        div.appendChild(changeBtn);
         bookList.appendChild(div);
     });
 }
