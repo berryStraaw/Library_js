@@ -26,14 +26,19 @@ function addBook(book){
     library.push(book);
 }
 
-function createBook(){
-    const title=document.querySelector('#title').value;
-    const author=document.querySelector('#author').value;
-    const pages=document.querySelector('#pages').value;
+function createBook(event){
+    
+    if(!title.validity.valid){
+        showError();
+        return;
+    }
+    const titlev=document.querySelector('#title').value;
+    const authorv=document.querySelector('#author').value;
+    const pagesv=document.querySelector('#pages').value;
     let hasRead=document.querySelector('#hasRead').value;
     if(hasRead=="true")hasRead=true;
     else hasRead=false;
-    const book= new Book(title, author, pages, hasRead);
+    const book= new Book(titlev, authorv, pagesv, hasRead);
     addBook(book);
     display();
 }
@@ -50,6 +55,7 @@ function display(){
 
         const changeBtn=document.createElement('button');
         changeBtn.innerHTML="change read status";
+        //changeBtn.onclick=element.changeRead.bind();
         changeBtn.onclick=function(){element.changeRead();display();}
         
 
@@ -65,3 +71,47 @@ const book1= new Book("hobbitzes", "danny", 15, false);
 addBook(book1);
 
 display();
+
+
+const form  = document.getElementsByTagName('form')[0];
+const title = document.getElementById('title');
+const author = document.getElementById('author');
+const authorError = document.querySelector('#author + span.error');
+const titleError = document.querySelector('#title + span.error');
+
+console.log(form); 
+title.addEventListener('input', (event)=>{
+    if(title.validity.valid){
+        titleError.textContent='';
+        titleError.className='error';
+    }
+    else{
+        showError();
+    }
+});
+
+author.addEventListener('input', (event)=>{
+    if(author.validity.valid){
+        authorError.textContent='';
+        authorError.className='error';
+    }
+    else{
+        showError();
+    }
+});
+
+
+function showError(){
+    if(title.validity.valueMissing){
+        titleError.textContent="you need a title";
+    }
+    else if(title.validity.typeMismach){
+        titleError.textContent="Must be letters and numbers only";
+    }
+    else if (title.validity.tooShort) {
+        // If the data is too short,
+        // display the following error message.
+        titleError.textContent = `Title should be at least ${title.minLength} characters; you entered ${title.value.length}.`;
+      }
+    titleError.className="error active";
+}

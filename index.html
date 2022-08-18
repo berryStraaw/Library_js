@@ -14,19 +14,29 @@
         </div>
         <div class="form">
             <form>
-                <label for="title">Title:</label><br>
-                <input type="text" id="title" name="title"><br>
+                <label for="title">Title:<br>
+                <input type="text" id="title" name="title" required minlength="3">
+                <span class="error" aria-live="polite"></span></label>
+                
+                <br>
+
                 <label for="author">Author:</label><br>
-                <input type="text" id="author" name="author"><br>
+                <input type="text" id="author" name="author">
+                <span class="error" aria-live="polite"></span>
+                <br>
+
                 <label for="pages">Number of pages:</label><br>
-                <input type="number" id="pages" name="pages"><br>
+                <input type="number" id="pages" name="pages">
+                <span class="error" aria-live="polite"></span>
+                <br>
+
                 <label for="hasRead">Have you read it:</label><br>
                 <select id="hasRead" name="hasRead">
                     <option value=true>Yes</option>
                     <option value=false>No</option>
                 </select><br>
                 
-                <button type="button" onclick="createBook()">Add book</button>
+                <button type="button" onclick="createBook(event)">Add book</button>
                 
 
             </form>
